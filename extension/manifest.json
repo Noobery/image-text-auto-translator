@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Image Text Auto Translator",
+  "version": "0.3.0",
+  "description": "OCR + translate text inside images on web pages using a local Ollama model.",
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "host_permissions": [
+    "<all_urls>",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "libs/tesseract.min.js",
+        "utils.js",
+        "ocr.js",
+        "selection.js",
+        "scanner.js",
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "libs/tesseract-worker.min.js",
+        "libs/tesseract-core.wasm.js",
+        "libs/eng.traineddata.gz",
+        "contentStyles.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_title": "Image Translator"
+  }
+}

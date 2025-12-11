@@ -1,0 +1,280 @@
+/* ============================================
+ * IMAGE TRANSLATOR - Content Script Styles
+ * ============================================ */
+
+/* CSS Custom Properties (Theme) */
+:root {
+  --it-primary: #4ecca3;
+  --it-primary-dim: rgba(78, 204, 163, 0.2);
+  --it-primary-hover: rgba(78, 204, 163, 0.4);
+  --it-bg-dark: #1a1a2e;
+  --it-bg-light: #16213e;
+  --it-border: #0f3460;
+  --it-text: #e0e0e0;
+  --it-text-dim: #888;
+  --it-error: #ff6b6b;
+  --it-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --it-radius: 12px;
+  --it-radius-sm: 6px;
+  --it-z-max: 2147483647;
+  --it-z-overlay: 2147483646;
+}
+
+/* ============================================
+ * SELECTION MODE
+ * ============================================ */
+
+.it-selection-mode {
+  cursor: crosshair !important;
+}
+
+.it-selection-mode * {
+  cursor: crosshair !important;
+}
+
+.it-selection-box {
+  position: fixed;
+  border: 2px dashed var(--it-primary);
+  background: rgba(78, 204, 163, 0.1);
+  z-index: var(--it-z-overlay);
+  pointer-events: none;
+}
+
+/* ============================================
+ * TOOLBAR
+ * ============================================ */
+
+.it-toolbar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--it-bg-dark) 0%, var(--it-bg-light) 100%);
+  border: 1px solid var(--it-border);
+  border-radius: var(--it-radius);
+  padding: 8px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  color: var(--it-text);
+  z-index: var(--it-z-max);
+  box-shadow: var(--it-shadow);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.it-toolbar .it-label {
+  color: #fff;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.it-toolbar button {
+  background: var(--it-primary-dim);
+  border: 1px solid var(--it-primary);
+  color: var(--it-primary);
+  padding: 8px 16px;
+  border-radius: var(--it-radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.it-toolbar button:hover {
+  background: var(--it-primary-hover);
+}
+
+.it-toolbar button.active {
+  background: var(--it-primary);
+  color: var(--it-bg-dark);
+}
+
+.it-toolbar select {
+  background: var(--it-primary-dim);
+  border: 1px solid var(--it-primary);
+  color: var(--it-primary);
+  padding: 8px 12px;
+  border-radius: var(--it-radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.it-toolbar select option {
+  background: var(--it-bg-dark);
+  color: var(--it-text);
+}
+
+/* ============================================
+ * TRANSLATION POPUP
+ * ============================================ */
+
+.it-translation-popup {
+  position: fixed;
+  background: linear-gradient(135deg, var(--it-bg-dark) 0%, var(--it-bg-light) 100%);
+  border: 1px solid var(--it-primary);
+  border-radius: var(--it-radius);
+  padding: 16px;
+  max-width: 400px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  color: #fff;
+  z-index: var(--it-z-max);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.it-translation-popup .it-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--it-text-dim);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+}
+
+.it-translation-popup .it-close:hover {
+  color: #fff;
+}
+
+.it-translation-popup h3 {
+  margin: 0 0 12px 0;
+  color: var(--it-primary);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.it-translation-popup .it-content {
+  line-height: 1.6;
+}
+
+.it-translation-popup .it-original {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--it-text-dim);
+  font-size: 12px;
+}
+
+/* ============================================
+ * STATUS PANEL
+ * ============================================ */
+
+#image-translator-status {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 280px;
+  background: linear-gradient(135deg, var(--it-bg-dark) 0%, var(--it-bg-light) 100%);
+  border: 1px solid var(--it-border);
+  border-radius: var(--it-radius);
+  padding: 12px 16px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  color: var(--it-text);
+  z-index: var(--it-z-max);
+  box-shadow: var(--it-shadow);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+#image-translator-status.it-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+#image-translator-status .it-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#image-translator-status .it-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+#image-translator-status .it-title {
+  font-weight: 600;
+  flex: 1;
+  color: #fff;
+}
+
+#image-translator-status .it-timer {
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--it-primary);
+  background: var(--it-primary-dim);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+#image-translator-status .it-status {
+  color: var(--it-primary);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+#image-translator-status .it-progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#image-translator-status .it-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecca3, #45b7d1);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+#image-translator-status .it-details {
+  font-size: 11px;
+  color: var(--it-text-dim);
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+#image-translator-status.it-success {
+  border-color: var(--it-primary);
+}
+
+#image-translator-status.it-error {
+  border-color: var(--it-error);
+}
+
+#image-translator-status.it-error .it-status {
+  color: var(--it-error);
+}
+
+/* ============================================
+ * TRANSLATION OVERLAYS
+ * ============================================ */
+
+.image-translator-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: var(--it-z-max);
+  overflow: visible;
+}
+
+.image-translator-simple-overlay {
+  position: absolute;
+  max-width: 300px;
+  background: linear-gradient(135deg, var(--it-bg-dark) 0%, var(--it-bg-light) 100%);
+  border: 1px solid var(--it-primary);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  color: #fff;
+  z-index: var(--it-z-max);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
